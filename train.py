@@ -239,3 +239,18 @@ if __name__ == "__main__":
         print("Generated audio shape:", audio_gen.shape)
         print("Generated text shape:", text_gen.shape)
         print("Generated image shape:", image_gen.shape)
+
+        # 保存生成的图像
+        image_gen = (image_gen.squeeze(0).cpu() + 1) / 2  # 反归一化到 [0, 1]
+        plt.imsave('generated_image.png', image_gen.permute(1, 2, 0).numpy())
+        print("Generated image saved as 'generated_image.png'")
+        # 保存生成的文本
+        generated_text = model.decoder.text_decoder.tokenizer.decode(torch.argmax(text_gen, dim=-1).squeeze().cpu().numpy(), skip_special_tokens=True)
+        with open('generated_text.txt', 'w', encoding='utf-8') as f:
+            f.write(generated_text)
+        print("Generated text saved as 'generated_text.txt'")
+        # 保存生成的音频
+        from scipy.io.wavfile import write
+        audio_gen = audio_gen.squeeze(0).squeeze(0).cpu().numpy()
+        write('generated_audio.wav', config['sampling_rate'], audio_gen)
+        print("Generated audio saved as 'generated_audio.wav'")

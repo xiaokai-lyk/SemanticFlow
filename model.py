@@ -291,7 +291,7 @@ class MultiModalVAELoss():
                 text.view(-1),
                 ignore_index=pad_token_id,
                 reduction='mean'
-            ) * text_weight
+            ) * text_weight / text_recon.size(1)    # 归一化不然会比别的大一个数量级
         else:
             raise ValueError("text_recon 应为 (batch, seq_len, vocab_size) 的 logits，但得到的维度为 {}".format(text_recon.dim()))
 

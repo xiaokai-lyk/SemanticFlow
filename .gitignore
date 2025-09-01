@@ -11,3 +11,4 @@ __pycache__/
 .vscode/
 README.zh_cn.md
 README.md
+ckpts/*.pth

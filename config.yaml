@@ -6,7 +6,7 @@ text_dim: 256          # 文本特征维度
 image_dim: 256        # 图像特征维度
 batch_size: 32
 epochs: 10
-learning_rate: 0.001
+learning_rate: 0.0007
 
 image_size: 128        # 图像尺寸
 #audio_length: 220500  # 5秒
@@ -21,18 +21,20 @@ train_image_captions: "./data/flickr8k/captions.csv"
 
 # Add learning rate scheduler and normalization parameters
 use_scheduler: true
-step_size: 5
+step_size: 100
 gamma: 0.5
 
-clip_grad_norm: 1.0
+clip_grad_norm: 3.0
 
 kl_anneal_steps: 2000
 kl_max_weight: 1.0
-audio_image_align_weight: 3.0
+audio_image_align_weight: 1
+
 save_every: 1
+save_path: "./ckpts"
 
 save_lalent_every: 100
 
-num_workers: -1 # -1 means using os.cpu_count()
+num_workers: 2 # -1 means using os.cpu_count()
 pin_memory: true
 persistent_workers: true
