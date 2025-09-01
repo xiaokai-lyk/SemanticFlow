@@ -228,29 +228,3 @@ if __name__ == "__main__":
     
     # 训练模型
     train_vae(model, dataloader, optimizer, epochs, device, vae_loss_fn, scheduler=scheduler, save_every=config.get('save_every', -1), save_path=config.get('save_path', None))
-    
-    # 测试模型：从潜在空间生成样本
-    model.eval()
-    with torch.no_grad():
-        # 随机采样潜在向量
-        z = torch.randn(1, audio_dim + text_dim * 2 + image_dim).to(device)
-        audio_gen, text_gen, image_gen = model.decoder(z)
-        
-        print("Generated audio shape:", audio_gen.shape)
-        print("Generated text shape:", text_gen.shape)
-        print("Generated image shape:", image_gen.shape)
-
-        # 保存生成的图像
-        image_gen = (image_gen.squeeze(0).cpu() + 1) / 2  # 反归一化到 [0, 1]
-        plt.imsave('generated_image.png', image_gen.permute(1, 2, 0).numpy())
-        print("Generated image saved as 'generated_image.png'")
-        # 保存生成的文本
-        generated_text = model.decoder.text_decoder.tokenizer.decode(torch.argmax(text_gen, dim=-1).squeeze().cpu().numpy(), skip_special_tokens=True)
-        with open('generated_text.txt', 'w', encoding='utf-8') as f:
-            f.write(generated_text)
-        print("Generated text saved as 'generated_text.txt'")
-        # 保存生成的音频
-        from scipy.io.wavfile import write
-        audio_gen = audio_gen.squeeze(0).squeeze(0).cpu().numpy()
-        write('generated_audio.wav', config['sampling_rate'], audio_gen)
-        print("Generated audio saved as 'generated_audio.wav'")
