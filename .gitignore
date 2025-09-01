@@ -1,0 +1,11 @@
+# Large files or not related to codebase
+data/
+env/
+deprecated/
+backup/
+bert-base-uncased/
+train_log.csv
+flickr8k.zip
+latent_vis/
+__pycache__/
+.vscode/
