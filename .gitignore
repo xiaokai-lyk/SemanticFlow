@@ -12,3 +12,5 @@ __pycache__/
 README.zh_cn.md
 README.md
 ckpts/*.pth
+generated_*
+old_vae_deprecated/
