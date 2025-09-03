@@ -1,0 +1,3 @@
+mapping_ckpt: "./mapping_model/best_mapping_model_seq.pth"
+prompt_prefix_text: null
+prompt_suffix_text: null

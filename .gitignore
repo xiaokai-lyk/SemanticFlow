@@ -11,6 +11,11 @@ __pycache__/
 .vscode/
 README.zh_cn.md
 README.md
-ckpts/*.pth
 generated_*
 old_vae_deprecated/
+ckpts/*
+!ckpts/.placeholder
+vae_infer_output/
+mapping_model/
+DeepSeek-R1-Distill-Qwen-1.5B/
+*.pkl
